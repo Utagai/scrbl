@@ -6,10 +6,10 @@ import System.Environment
 import System.Exit
 
 isHelpArg :: String -> Bool
-isHelpArg arg = (arg == "--help" || arg == "-h")
+isHelpArg arg = arg == "--help" || arg == "-h"
 
 isHelpArgs :: [String] -> Bool
-isHelpArgs = any (isHelpArg)
+isHelpArgs = any isHelpArg
 
 showHelpMsg :: IO [String]
 showHelpMsg = do
