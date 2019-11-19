@@ -25,25 +25,25 @@ Configuration is handled via a JSON file. Although a configuration file can be s
 The JSON configuration file is short and simple, because `scrbl` is simple. A description of this JSON file is as follows.
 ```json
 {
-    "base": <filepath(directory)>,
-    "editor": <binary name|filepath(binary)>,
-    "default_extension": <dot-extension>,
-    "accept_paths": true|false,
+    "base": "<filepath(directory)>",
+    "editor": "<binary name|filepath(binary)>",
+    "default_extension": "<dot-extension>",
+    "accept_paths": "<true|false>",
     "sync": {
         "ssh": {
-            "host": <hostname>,
-            "port": <port>,
-            "path": <filepath(directory)>
+            "host": "<hostname>",
+            "port": "<port>",
+            "path": "<filepath(directory)>"
         },
         "local": {
-            "path": <filepath(directory)>
+            "path": "<filepath(directory)>"
         }
     }
 }
 ```
 Below is some extra information on the fields shown above:
 | Field               | Format                         | Description                                                  | Examples             |
-|:-------------------:|:------------------------------:|:------------------------------------------------------------:|:--------------------:|
+| -------------------:|:------------------------------:|:------------------------------------------------------------:| --------------------:|
 |`"base"`             |`<filepath(directory)>`         |The root directory of scribble hierachies.                    |    -                 |
 |`"editor"`           |`<binary name|filepath(binary)>`|Binary name if on `$PATH`, absolute path otherwise.           |`code`,`/usr/bin/nvim`|
 |`"default_extension"`|`<dot-extension>`               |The default extension to use for scribbles when not specified.|`".md"`,`".txt"`,`""` |
