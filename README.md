@@ -42,6 +42,7 @@ The JSON configuration file is short and simple, because `scrbl` is simple. A de
 }
 ```
 Below is some extra information on the fields shown above:
+
 | Field               | Format                         | Description                                                  | Examples             |
 | -------------------:|:------------------------------:|:------------------------------------------------------------:| --------------------:|
 |`"base"`             |`<filepath(directory)>`         |The root directory of scribble hierachies.                    |    -                 |
