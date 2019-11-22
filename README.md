@@ -44,7 +44,7 @@ The JSON configuration file is short and simple, because `scrbl` is simple. A de
 Below is some extra information on the fields shown above:
 
 | Field             | Examples                       | Description                                       | Default            |
-| -----------------:|:------------------------------:|:-------------------------------------------------:| ------------------:|
+|:----------------- |:------------------------------:|:-------------------------------------------------:|:------------------ |
 |`"base"`           |`/notes/`                       |The root directory of scribble hierachies.         |`~/Documents/scrbl/`|
 |`"editor"`         |`vim`,`code`                    |Binary name if on `$PATH`, absolute path otherwise.|`$EDITOR`           |
 |`"extension"`      |`""`,`".md"`                    |The extension to use for files when missing.       |`.txt`              |
