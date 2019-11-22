@@ -27,7 +27,7 @@ The JSON configuration file is short and simple, because `scrbl` is simple. A de
 {
     "base": "<filepath(directory)>",
     "editor": "<binary name|filepath(binary)>",
-    "default_extension": "<dot-extension>",
+    "extension": "<dot-extension>",
     "accept_paths": "<true|false>",
     "sync": {
         "ssh": {
@@ -43,13 +43,18 @@ The JSON configuration file is short and simple, because `scrbl` is simple. A de
 ```
 Below is some extra information on the fields shown above:
 
-| Field               | Format                         | Description                                                  | Examples             |
-| -------------------:|:------------------------------:|:------------------------------------------------------------:| --------------------:|
-|`"base"`             |`<filepath(directory)>`         |The root directory of scribble hierachies.                    |    -                 |
-|`"editor"`           |`<binary name|filepath(binary)>`|Binary name if on `$PATH`, absolute path otherwise.           |`code`,`/usr/bin/nvim`|
-|`"default_extension"`|`<dot-extension>`               |The default extension to use for scribbles when not specified.|`".md"`,`".txt"`,`""` |
-|`"accept_paths"`     |`true|false`                    |Whether scribble names can be paths.                          |-|
-|`"sync.ssh.host"`    |`<hostname>`                    |The hostname of the `ssh` server.                             |-|
-|`"sync.ssh.port"`    |`<port>`                        |The port of the `ssh` server.                                 |-|
-|`"sync.ssh.path"`    |`<filepath(directory)>`         |The path on the `ssh` server.                                 |-|
-|`"sync.local.path"`  |`<filepath(directory)>`         |The path on the local filesystem to backup saved scribbles to.|-|
+| Field             | Examples                       | Description                                       | Default            |
+| -----------------:|:------------------------------:|:-------------------------------------------------:| ------------------:|
+|`"base"`           |`/notes/`                       |The root directory of scribble hierachies.         |`~/Documents/scrbl/`|
+|`"editor"`         |`vim`,`code`                    |Binary name if on `$PATH`, absolute path otherwise.|`$EDITOR`           |
+|`"extension"`      |`""`,`".md"`                    |The extension to use for files when missing.       |`.txt`              |
+|`"accept_paths"`   |`true`                          |Whether scribble names can be paths.               |`true`              |
+|`"sync.ssh.host"`  |-                               |The hostname of the `ssh` server.                  |-                   |
+|`"sync.ssh.port"`  |-                               |The port of the `ssh` server.                      |-                   |
+|`"sync.ssh.path"`  |-                               |The path on the `ssh` server.                      |-                   |
+|`"sync.local.path"`|-                               |The path on the filesystem to sync to.             |-                   |
+
+It is worth noting that any number of `sync` options can be specified. For example, both `local` and `ssh` can be specified simultaneously.
+
+### Syncing
+A short note on syncing: syncing is really just a way to backup scribbles to secondary -- preferrably remote -- locations. You can do things like syncing your scribbles to an `ssh` server somewhere, or even just syncing it to antoher folder, potentially on another hard disk, etc.
