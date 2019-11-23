@@ -14,7 +14,7 @@ import           Config
 foo :: Int -> Int
 foo = (+ 2)
 
-fooTest = TestCase (assertEqual "foo 3," (5) (foo 3))
+fooTest = TestCase (assertEqual "foo 3," 5 (foo 3))
 simpleNoNested = TestCase
   (do
     eitherCfg <- getConfigAt "./rsrc/testdata/config/no_sync.json"
@@ -44,18 +44,19 @@ simpleAll = TestCase
       Right cfg -> assertEqual "read-in config," expectedCfg cfg
   )
  where
-  expectedCfg = Config { base         = Just "./scrap/simple/"
-                       , editor       = Just "vim"
-                       , extension    = Just ".txt"
-                       , accept_paths = Just True
-                       , sync = Just Sync { ssh = Just SSH { host = "blah"
-                                                           , port = 90
-                                                           , sshpath = "scrap/simple/"
-                                                           }
-                                     , local = Just Local { localpath = "./scrap/simple_backup/"
-                                                          }
-                                     }
+  expectedCfg = Config
+    { base         = Just "./scrap/simple/"
+    , editor       = Just "vim"
+    , extension    = Just ".txt"
+    , accept_paths = Just True
+    , sync         = Just Sync
+                       { ssh = Just SSH { host    = "blah"
+                                        , port    = 90
+                                        , sshpath = "scrap/simple/"
+                                        }
+                       , local = Just Local { localpath = "./scrap/simple_backup/" }
                        }
+    }
 
 configTests = TestList
   [ TestLabel "fooTest"        fooTest

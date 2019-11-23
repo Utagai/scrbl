@@ -1,8 +1,9 @@
 module Scrbl
-    ( Scribble
-    ) where
+  ( Scribble
+  )
+where
 
-data Scribble = Scribble [String]
+newtype Scribble = Scribble [String]
 
 toScribble :: [String] -> Scribble
-toScribble segments = Scribble segments
+toScribble = Scribble
