@@ -1,0 +1,6 @@
+{
+    "base": "./scrap/simple/",
+    "editor": "vim",
+    "extension": ".txt",
+    "accept_paths": "SHOULD BE BOOL"
+}
