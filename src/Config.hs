@@ -64,9 +64,7 @@ instance FromJSON Config where
       <*> v
       .:? "sync"
 
-type ConfigPath = String
-
-getConfigAt :: ConfigPath -> IO (Either String Config)
+getConfigAt :: FilePath -> IO (Either String Config)
 getConfigAt path = do
   eitherBytes <- try (B.readFile path) :: IO (Either IOException B.ByteString)
   case eitherBytes of

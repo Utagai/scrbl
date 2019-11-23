@@ -1,0 +1,13 @@
+{
+    "base": "./scrap/simple/",
+    "editor": "vim",
+    "extension": ".txt",
+    "accept_paths": true,
+    "sync": {
+        "ssh": {
+            "host": "blah",
+            "port": 90,
+            "path": "scrap/simple/"
+        }
+    }
+}

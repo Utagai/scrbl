@@ -1,0 +1,11 @@
+{
+    "base": "./scrap/simple/",
+    "editor": "vim",
+    "extension": ".txt",
+    "accept_paths": true,
+    "sync": {
+        "local": {
+            "path": "./scrap/simple_backup/"
+        }
+    }
+}
