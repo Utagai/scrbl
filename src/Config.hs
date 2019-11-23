@@ -1,44 +1,54 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DuplicateRecordFields #-}
 
 module Config
     ( Config (..)
+    , Sync (..)
+    , SSH (..)
+    , Local (..)
     , getConfigAt
     ) where
 
-import Data.Text
+import qualified Data.Text as DT
 import Control.Monad
 import Control.Exception
 import Data.Aeson
 import GHC.Generics
 import qualified Data.ByteString.Lazy as B
 
+-- TODO(may): port should be an integer.
 data SSH =
-    SSH { host :: !Text
-        , port :: !Text
-        , path :: !Text
+    SSH { host :: DT.Text
+        , port :: DT.Text
+        , sshpath :: DT.Text
         } deriving (Show,Generic,Eq)
 
-instance FromJSON SSH
+instance FromJSON SSH where
+  parseJSON (Object v) =
+    SSH <$> v .: "host"
+           <*> v .:? "port" .!= "22"
+           <*> v .:? "path" .!= "."
 
-data Local =
-    Local { path :: !Text
+newtype Local =
+    Local { localpath :: DT.Text
           } deriving (Show,Generic,Eq)
 
-instance FromJSON Local
+instance FromJSON Local where
+  parseJSON (Object v) =
+    Local <$> v .: "path"
 
 data Sync =
-    Sync { ssh :: SSH
-         , local :: Local
+    Sync { ssh :: Maybe SSH
+         , local :: Maybe Local
          } deriving (Show,Generic,Eq)
 
 instance FromJSON Sync
 
 data Config =
-    Config { base :: !(Maybe Text)
-           , editor :: !(Maybe Text)
-           , extension :: !(Maybe Text)
+    Config { base :: Maybe DT.Text
+           , editor :: Maybe DT.Text
+           , extension :: Maybe DT.Text
            , accept_paths :: Maybe Bool
            , sync :: Maybe Sync
            } deriving (Show,Generic,Eq)
