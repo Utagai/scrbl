@@ -20,7 +20,7 @@ $ scrbl supergroup subgroup my_scribble # creates <BASE>/supergroup/subgroup/not
 Configuration is handled via a JSON file. Although a configuration file can be specified to `scrbl`, generally, this is not recommended as it makes usage of `scrbl` clunky. Instead, when called without `--config`, `scrbl` will look for this JSON configuration file in the following places, in order of priority descending:
     1. `~/.config/scrbl/scrbl.json`
     2. `~/.scrbl.json`
-    3. `~/etc/scrbl/scrbl.json`
+    3. `/etc/scrbl/scrbl.json`
 
 The JSON configuration file is short and simple, because `scrbl` is simple. A description of this JSON file is as follows.
 ```json
