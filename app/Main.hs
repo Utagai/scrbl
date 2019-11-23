@@ -5,7 +5,7 @@ import Config
 
 main :: IO ()
 main = do
-    eCfg <- getConfig "./rsrc/testdata/config/simple_no_nested.json"
+    eCfg <- getConfig "./rsrc/testdata/config/simple_all.json"
     case eCfg of
         Left err -> print err
         Right eCfg -> print eCfg

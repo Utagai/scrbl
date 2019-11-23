@@ -1,4 +1,6 @@
-{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 module Config
     ( Config
@@ -11,16 +13,44 @@ import Data.Aeson
 import GHC.Generics
 import qualified Data.ByteString.Lazy as B
 
-data Config =
-    Config { base :: !Text
-           , editor :: !Text
-           , extension :: !Text
-           , accept_paths :: Bool
-             } deriving (Show,Generic)
+data SSH =
+    SSH { host :: !Text
+        , port :: !Text
+        , path :: !Text
+        } deriving (Show,Generic)
 
-instance FromJSON Config
+instance FromJSON SSH
+
+data Local =
+    Local { path :: !Text
+          } deriving (Show,Generic)
+
+instance FromJSON Local
+
+data Sync =
+    Sync { ssh :: SSH
+         , local :: Local
+         } deriving (Show,Generic)
+
+instance FromJSON Sync
+
+data Config =
+    Config { base :: !(Maybe Text)
+           , editor :: !(Maybe Text)
+           , extension :: !(Maybe Text)
+           , accept_paths :: Maybe Bool
+           , sync :: Maybe Sync
+           } deriving (Show,Generic)
+
+instance FromJSON Config where
+    parseJSON (Object v) =
+        Config <$> v .:? "base"
+               <*> v .:? "editor"
+               <*> v .:? "extension"
+               <*> v .:? "accept_paths"
+               <*> v .:? "sync"
 
 type ConfigPath = String
 
 getConfig :: ConfigPath -> IO (Either String Config)
-getConfig path = eitherDecode <$> (B.readFile path)
+getConfig path = eitherDecode <$> B.readFile path
