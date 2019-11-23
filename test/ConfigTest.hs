@@ -17,7 +17,7 @@ foo = (+ 2)
 fooTest = TestCase (assertEqual "foo 3," (5) (foo 3))
 simpleNoNested = TestCase
   (do
-    eitherCfg <- getConfigAt "./rsrc/testdata/config/simple_no_nested.json"
+    eitherCfg <- getConfigAt "./rsrc/testdata/config/no_sync.json"
     case eitherCfg of
       Left err ->
         assertFailure
@@ -35,7 +35,7 @@ simpleNoNested = TestCase
 
 simpleAll = TestCase
   (do
-    eitherCfg <- getConfigAt "./rsrc/testdata/config/simple_all.json"
+    eitherCfg <- getConfigAt "./rsrc/testdata/config/all.json"
     case eitherCfg of
       Left err ->
         assertFailure
