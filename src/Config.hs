@@ -20,14 +20,14 @@ import qualified Data.ByteString.Lazy as B
 -- TODO(may): port should be an integer.
 data SSH =
     SSH { host :: DT.Text
-        , port :: DT.Text
+        , port :: Int
         , sshpath :: DT.Text
         } deriving (Show,Generic,Eq)
 
 instance FromJSON SSH where
   parseJSON (Object v) =
     SSH <$> v .: "host"
-           <*> v .:? "port" .!= "22"
+           <*> v .:? "port" .!= 22
            <*> v .:? "path" .!= "."
 
 newtype Local =

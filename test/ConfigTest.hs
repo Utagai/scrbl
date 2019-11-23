@@ -49,7 +49,7 @@ simpleAll = TestCase
                        , extension    = Just ".txt"
                        , accept_paths = Just True
                        , sync = Just Sync { ssh = Just SSH { host = "blah"
-                                                           , port = "90"
+                                                           , port = 90
                                                            , sshpath = "scrap/simple/"
                                                            }
                                      , local = Just Local { localpath = "./scrap/simple_backup/"

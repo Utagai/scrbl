@@ -6,7 +6,7 @@
     "sync": {
         "ssh": {
             "host": "blah",
-            "port": "90",
+            "port": 90,
             "path": "scrap/simple/"
         },
         "local": {
