@@ -78,8 +78,7 @@ homeDir = getHomeDirectory
 dotConfigLocation = fmap (</> ".config/scrbl/scrbl.json") homeDir
 dotfile = fmap (</> ".scrbl.json") homeDir
 defaultConfigLocations =
-  sequence [dotConfigLocation, dotfile, return "/etc/scrbl/scrbl.json"] :: IO
-      [FilePath]
+  sequence [dotConfigLocation, dotfile, return "/etc/scrbl/scrbl.json"] -- TODO(may): We should also account for the config CLI argument.
 
 
 -- TODO(may): This is kind of hard to test, since it inherently relies on the
