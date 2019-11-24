@@ -1,9 +1,9 @@
 module Main where
 
+import           System.Exit
+
 import           Args
 import           Config
-
-import           System.Exit
 
 config :: IO Config
 config = do
@@ -14,7 +14,8 @@ config = do
 
 main :: IO ()
 main = do
-  args <- handleArgs
-  cfg  <- config
+  -- handleArgs will handle the work of exiting on bad args or on help.
+  scribble <- handleArgs
+  cfg      <- config
   print cfg
-  print args
+  print scribble

@@ -7,6 +7,8 @@ import           System.Environment
 import           System.Exit
 import           Data.List
 
+import           Scribble
+
 isHelpArg :: String -> Bool
 isHelpArg arg = arg == "--help" || arg == "-h"
 
@@ -22,7 +24,7 @@ showHelpMsg = do
       = "Usage: scrbl [--help|-h] [--config CONFIG] [SEGMENT...] SCRIBBLE_NAME[.EXTENSION]"
   let
     description
-      = "Creates notes (scrbls) at <base>/segment1/.../segmentn/SCRIBBLE_NAME.<EXTENSION>."
+      = "Creates notes (scribbles) at <base>/segment1/.../segmentn/SCRIBBLE_NAME.<EXTENSION>."
   let optionsHeader   = "Options:"
   let helpDescription = "\t -h, --help  \tPrints this usage information."
   let
@@ -32,9 +34,10 @@ showHelpMsg = do
   let segmentDescription =
         "\t SEGMENT \tA segment of the path on top of the base directory."
   let
-    scrblDescription
-      = "\t SCRIBBLE_NAME \tThe name for the scrbl to create, will become the filename."
-  let extensionDescription = "\t EXTENSION \tThe file extension of the scrbl."
+    scribbleDescription
+      = "\t SCRIBBLE_NAME \tThe name for the scrible to create, will become the filename."
+  let extensionDescription =
+        "\t EXTENSION \tThe file extension of the scribble."
   let helpOutput = intercalate
         "\n"
         [ usageLine
@@ -45,13 +48,20 @@ showHelpMsg = do
         , configDescription
         , symbolsHeader
         , segmentDescription
-        , scrblDescription
+        , scribbleDescription
         , extensionDescription
         ]
   putStrLn helpOutput
   exitSuccess
 
-handleArgs :: IO [String]
+isEmpty :: [String] -> Bool
+isEmpty = null
+
+handleArgs :: IO Scribble
 handleArgs = do
   args <- getArgs
-  if isHelpArgs args then showHelpMsg else return . tail $ args
+  if isEmpty args
+    then die "no arguments given"
+    else do
+      let scribble = toScribble args
+      if isHelpArgs args then showHelpMsg else return scribble
