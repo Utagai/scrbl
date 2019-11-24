@@ -15,7 +15,7 @@ config = do
 main :: IO ()
 main = do
   -- handleArgs will handle the work of exiting on bad args or on help.
-  scribble <- handleArgs
-  cfg      <- config
+  args <- handleArgs
+  cfg  <- config
   print cfg
-  print scribble
+  print args

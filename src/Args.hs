@@ -54,14 +54,29 @@ showHelpMsg = do
   putStrLn helpOutput
   exitSuccess
 
-isEmpty :: [String] -> Bool
-isEmpty = null
+data Args =
+    Args { configPath :: Maybe String
+         , segments :: [String]
+         } deriving (Show)
 
-handleArgs :: IO Scribble
+-- The following implementations for parsing the arguments could probably be
+-- more efficient, but since I expect no ridiculous or nefarious invocations of
+-- scrbl that involve billions of arguments, it shouldn't really matter and
+-- therefore the simplicity and brevity are worth it.
+getConfigPath :: [String] -> Maybe String
+getConfigPath args = if configSpecified then config else Nothing
+ where
+  configSpecified = any (\arg -> arg == "-c" || arg == "--config") args
+  config          = Just (args !! 1) -- Config comes right after
+
+toArgs :: [String] -> Args
+toArgs args = Args { configPath = getConfigPath, segments = segments }
+  where segments = theRest
+
+handleArgs :: IO [String]
 handleArgs = do
   args <- getArgs
   if isEmpty args
     then die "no arguments given"
-    else do
-      let scribble = toScribble args
-      if isHelpArgs args then showHelpMsg else return scribble
+    else if isHelpArgs args then showHelpMsg else return args
+  where isEmpty = null

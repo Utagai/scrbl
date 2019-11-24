@@ -8,6 +8,7 @@
 $ scrbl --help
 scrbl [--help|-h] [--config CONFIG] [segments...] scribble_file[.extension]
 ```
+*NOTE*: The order of arguments, except for `--help`/`-h` is _not_ flexible. If you specify a `--config`, it _must_ come before, e.g., `[segments...]`. This is due to the fact that it is ambiguous whether `--config CONFIG` refers to a segment or is a flag, thanks to Unix file name rules allowing such characters.
 
 ## Examples
 ```bash

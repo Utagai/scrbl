@@ -1,6 +1,7 @@
 module Scribble
   ( Scribble
   , toScribble
+  , materialize
   )
 where
 
@@ -13,3 +14,9 @@ stringsToFilePath = foldr (</>) ""
 
 toScribble :: [String] -> Scribble
 toScribble = Scribble . stringsToFilePath
+
+filepath :: Scribble -> FilePath
+filepath (Scribble fp) = fp
+
+materialize :: Scribble -> IO ()
+materialize scrbl = writeFile (filepath scrbl) ""
