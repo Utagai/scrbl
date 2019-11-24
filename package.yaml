@@ -23,6 +23,8 @@ dependencies:
 - aeson
 - text
 - bytestring
+- directory
+- filepath
 
 library:
   source-dirs: src

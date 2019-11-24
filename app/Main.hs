@@ -5,7 +5,7 @@ import           Config
 
 main :: IO ()
 main = do
-  eitherCfg <- getConfigAt "./rsrc/testdata/config/all.json"
+  eitherCfg <- getConfig
   case eitherCfg of
-    Left  err -> putStrLn ("Failed to load configuration " ++ err)
+    Left  err -> putStrLn ("Failed to load configuration: " ++ err)
     Right cfg -> print cfg
