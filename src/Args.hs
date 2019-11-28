@@ -1,5 +1,6 @@
 module Args
   ( handleArgs
+  , Args(..)
   )
 where
 
@@ -66,17 +67,21 @@ data Args =
 getConfigPath :: [String] -> Maybe String
 getConfigPath args = if configSpecified then config else Nothing
  where
-  configSpecified = any (\arg -> arg == "-c" || arg == "--config") args
-  config          = Just (args !! 1) -- Config comes right after
+  configSpecified = head args == "--config" || head args == "-c"
+  config          = Just (args !! 1) -- Config comes right after if it exists.
 
 toArgs :: [String] -> Args
-toArgs args = Args { configPath = getConfigPath, segments = segments }
-  where segments = theRest
+toArgs args = Args { configPath = path, segments = segments }
+ where
+  path     = getConfigPath args
+  segments = case path of
+    Nothing -> args
+    _       -> drop 2 args -- If a config path was found, then the first two arguments are not segments.
 
-handleArgs :: IO [String]
+handleArgs :: IO Args
 handleArgs = do
   args <- getArgs
   if isEmpty args
     then die "no arguments given"
-    else if isHelpArgs args then showHelpMsg else return args
+    else if isHelpArgs args then showHelpMsg else return . toArgs $ args
   where isEmpty = null

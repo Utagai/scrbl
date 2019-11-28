@@ -78,20 +78,22 @@ homeDir = getHomeDirectory
 dotConfigLocation = fmap (</> ".config/scrbl/scrbl.json") homeDir
 dotfile = fmap (</> ".scrbl.json") homeDir
 defaultConfigLocations =
-  sequence [dotConfigLocation, dotfile, return "/etc/scrbl/scrbl.json"] -- TODO(may): We should also account for the config CLI argument.
+  [dotConfigLocation, dotfile, return "/etc/scrbl/scrbl.json"] -- TODO(may): We should also account for the config CLI argument.
 
 
--- TODO(may): This is kind of hard to test, since it inherently relies on the
--- environment for things like `~` and files that (don't) exist on the system.
--- The only good way to really test this and so robustly is to mandate that the
--- tests be run in an isolated/controlled environment, which is quite a bit of
--- work for just a single function.
-getConfig :: IO (Either String Config)
-getConfig = cfg
+-- TODO(may): This is kind of hard to test fully, since it inherently relies on
+-- the environment for things like `~` and files that (don't) exist on the
+-- system.  The only good way to really test this and so robustly is to mandate
+-- that the tests be run in an isolated/controlled environment, which is quite
+-- a bit of work for just a single function.
+getConfig :: Maybe String -> IO (Either String Config)
+getConfig customPath = cfg
  where
-   -- IO [FilePath] -> IO [Either String Config]
+  configLocations = case customPath of
+    Nothing   -> defaultConfigLocations
+    Just path -> return path : defaultConfigLocations
   configOpenAttempts =
-    mapM getConfigAt =<< defaultConfigLocations :: IO [Either String Config]
+    mapM getConfigAt =<< sequence configLocations :: IO [Either String Config]
   isErr =
     (\case
       Left  err -> False

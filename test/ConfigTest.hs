@@ -32,6 +32,9 @@ cfgFailTestCase path expectedMsg = TestCase
       Right cfg -> assertFailure "expected failure, but was successful"
   )
 
+-- To be honest, these are really just testing that the Aeson library is acting
+-- as it should... but I wrote these anyways to get experience writing Haskell
+-- tests.
 configTests = TestList
   [ TestLabel
     "noNested"
