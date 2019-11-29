@@ -2,6 +2,5 @@
     "base": "./scrap/simple/",
     "editor": "vim",
     "extension": ".txt",
-    "accept_paths": true,
     "extra_field": "lol"
 }

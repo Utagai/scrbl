@@ -40,11 +40,10 @@ configTests = TestList
     "noNested"
     (cfgTestCase
       "./rsrc/testdata/config/no_sync.json"
-      Config { base         = Just "./scrap/simple/"
-             , editor       = Just "vim"
-             , extension    = Just ".txt"
-             , accept_paths = Just True
-             , sync         = Nothing
+      Config { base      = Just "./scrap/simple/"
+             , editor    = Just "vim"
+             , extension = Just ".txt"
+             , sync      = Nothing
              }
     )
   , TestLabel
@@ -52,17 +51,16 @@ configTests = TestList
     (cfgTestCase
       "./rsrc/testdata/config/all.json"
       Config
-        { base         = Just "./scrap/simple/"
-        , editor       = Just "vim"
-        , extension    = Just ".txt"
-        , accept_paths = Just True
-        , sync         = Just Sync
-                           { ssh = Just SSH { host    = "blah"
-                                            , port    = 90
-                                            , sshpath = "scrap/simple/"
-                                            }
-                           , local = Just Local { localpath = "./scrap/simple_backup/" }
-                           }
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        , sync      = Just Sync
+                        { ssh = Just SSH { host    = "blah"
+                                         , port    = 90
+                                         , sshpath = "scrap/simple/"
+                                         }
+                        , local = Just Local { localpath = "./scrap/simple_backup/" }
+                        }
         }
     )
   , TestLabel
@@ -70,14 +68,13 @@ configTests = TestList
     (cfgTestCase
       "./rsrc/testdata/config/partial_sync_local.json"
       Config
-        { base         = Just "./scrap/simple/"
-        , editor       = Just "vim"
-        , extension    = Just ".txt"
-        , accept_paths = Just True
-        , sync         = Just Sync
-                           { ssh = Nothing
-                           , local = Just Local { localpath = "./scrap/simple_backup/" }
-                           }
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        , sync      = Just Sync
+                        { ssh = Nothing
+                        , local = Just Local { localpath = "./scrap/simple_backup/" }
+                        }
         }
     )
   , TestLabel
@@ -85,17 +82,16 @@ configTests = TestList
     (cfgTestCase
       "./rsrc/testdata/config/partial_sync_ssh.json"
       Config
-        { base         = Just "./scrap/simple/"
-        , editor       = Just "vim"
-        , extension    = Just ".txt"
-        , accept_paths = Just True
-        , sync         = Just Sync
-                           { ssh   = Just SSH { host    = "blah"
-                                              , port    = 90
-                                              , sshpath = "scrap/simple/"
-                                              }
-                           , local = Nothing
-                           }
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        , sync      = Just Sync
+                        { ssh   = Just SSH { host    = "blah"
+                                           , port    = 90
+                                           , sshpath = "scrap/simple/"
+                                           }
+                        , local = Nothing
+                        }
         }
     )
   , TestLabel
@@ -103,17 +99,16 @@ configTests = TestList
     (cfgTestCase
       "./rsrc/testdata/config/sync_ssh_missing_port.json"
       Config
-        { base         = Just "./scrap/simple/"
-        , editor       = Just "vim"
-        , extension    = Just ".txt"
-        , accept_paths = Just True
-        , sync         = Just Sync
-                           { ssh   = Just SSH { host    = "blah"
-                                              , port    = 22
-                                              , sshpath = "scrap/simple/"
-                                              }
-                           , local = Nothing
-                           }
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        , sync      = Just Sync
+                        { ssh   = Just SSH { host    = "blah"
+                                           , port    = 22
+                                           , sshpath = "scrap/simple/"
+                                           }
+                        , local = Nothing
+                        }
         }
     )
   , TestLabel
@@ -131,17 +126,16 @@ configTests = TestList
     "badTypedConfig"
     (cfgFailTestCase
       "./rsrc/testdata/config/badly_typed.json"
-      "Error in $['accept_paths']: expected Bool, but encountered String"
+      "Error in $.extension: expected String, but encountered Boolean"
     )
   , TestLabel
     "extraField"
     (cfgTestCase
       "./rsrc/testdata/config/no_sync.json"
-      Config { base         = Just "./scrap/simple/"
-             , editor       = Just "vim"
-             , extension    = Just ".txt"
-             , accept_paths = Just True
-             , sync         = Nothing
+      Config { base      = Just "./scrap/simple/"
+             , editor    = Just "vim"
+             , extension = Just ".txt"
+             , sync      = Nothing
              }
     )
   ]

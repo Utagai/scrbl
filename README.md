@@ -29,7 +29,6 @@ The JSON configuration file is short and simple, because `scrbl` is simple. A de
     "base": "<filepath(directory)>",
     "editor": "<binary name|filepath(binary)>",
     "extension": "<dot-extension>",
-    "accept_paths": "<true|false>",
     "sync": {
         "ssh": {
             "host": "<hostname>",
@@ -49,7 +48,6 @@ Below is some extra information on the fields shown above:
 |`"base"`           |`/notes/`                       |The root directory of scribble hierachies.         |`~/Documents/scrbl/`|
 |`"editor"`         |`vim`,`code`                    |Binary name if on `$PATH`, absolute path otherwise.|`$EDITOR`           |
 |`"extension"`      |`""`,`".md"`                    |The extension to use for files when missing.       |`.txt`              |
-|`"accept_paths"`   |`true`                          |Whether scribble names can be paths.               |`true`              |
 |`"sync.ssh.host"`  |-                               |The hostname of the `ssh` server.                  |-                   |
 |`"sync.ssh.port"`  |-                               |The port of the `ssh` server.                      |-                   |
 |`"sync.ssh.path"`  |-                               |The path on the `ssh` server.                      |-                   |

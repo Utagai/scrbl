@@ -4,6 +4,7 @@
 
 module Config
   ( Config(..)
+  , baseString
   , Sync(..)
   , SSH(..)
   , Local(..)
@@ -13,6 +14,7 @@ module Config
 where
 
 import qualified Data.Text                     as DT
+import           Data.Maybe
 import           Control.Monad
 import           Control.Exception
 import           System.Directory
@@ -22,9 +24,9 @@ import           GHC.Generics
 import qualified Data.ByteString.Lazy          as B
 
 data SSH =
-    SSH { host :: DT.Text
+    SSH { host :: String -- TODO(may): Do we actually need to use Text?
         , port :: Int
-        , sshpath :: DT.Text
+        , sshpath :: String
         } deriving (Show,Generic,Eq)
 
 instance FromJSON SSH where
@@ -32,7 +34,7 @@ instance FromJSON SSH where
     SSH <$> v .: "host" <*> v .:? "port" .!= 22 <*> v .:? "path" .!= "."
 
 newtype Local =
-    Local { localpath :: DT.Text
+    Local { localpath :: String
           } deriving (Show,Generic,Eq)
 
 instance FromJSON Local where
@@ -46,12 +48,14 @@ data Sync =
 instance FromJSON Sync
 
 data Config =
-    Config { base :: Maybe DT.Text -- TODO(may): We should probably allow this field to be interpolated and accept `~`.
-           , editor :: Maybe DT.Text
-           , extension :: Maybe DT.Text
-           , accept_paths :: Maybe Bool
+    Config { base :: Maybe String -- TODO(may): We should probably allow this field to be interpolated and accept `~`.
+           , editor :: Maybe String -- TODO(may): We should default to $EDITOR.
+           , extension :: Maybe String
            , sync :: Maybe Sync
            } deriving (Show,Generic,Eq)
+
+baseString :: Config -> String
+baseString cfg = fromMaybe "~/Documents/scrbl/" (base cfg)
 
 instance FromJSON Config where
   parseJSON (Object v) =
@@ -62,8 +66,6 @@ instance FromJSON Config where
       .:? "editor"
       <*> v
       .:? "extension"
-      <*> v
-      .:? "accept_paths"
       <*> v
       .:? "sync"
 

@@ -8,8 +8,6 @@ import           System.Environment
 import           System.Exit
 import           Data.List
 
-import           Scribble
-
 isHelpArg :: String -> Bool
 isHelpArg arg = arg == "--help" || arg == "-h"
 

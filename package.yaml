@@ -25,6 +25,7 @@ dependencies:
 - bytestring
 - directory
 - filepath
+- process
 
 library:
   source-dirs: src
