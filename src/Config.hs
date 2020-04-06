@@ -5,8 +5,6 @@
 module Config
   ( Config(..)
   , baseString
-  , SSH(..)
-  , Local(..)
   , getConfigAt
   , getConfig
   )
@@ -21,23 +19,6 @@ import           System.FilePath
 import           Data.Aeson
 import           GHC.Generics
 import qualified Data.ByteString.Lazy          as B
-
-data SSH =
-    SSH { host :: String -- TODO(may): Do we actually need to use Text?
-        , port :: Int
-        , sshpath :: String
-        } deriving (Show,Generic,Eq)
-
-instance FromJSON SSH where
-  parseJSON (Object v) =
-    SSH <$> v .: "host" <*> v .:? "port" .!= 22 <*> v .:? "path" .!= "."
-
-newtype Local =
-    Local { localpath :: String
-          } deriving (Show,Generic,Eq)
-
-instance FromJSON Local where
-  parseJSON (Object v) = Local <$> v .: "path"
 
 data Config =
     Config { base :: Maybe String -- TODO(may): We should probably allow this field to be interpolated and accept `~`.

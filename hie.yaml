@@ -1,0 +1,6 @@
+cradle:
+  stack:
+    component: "scrbl"
+
+dependencies:
+  - package.yaml
