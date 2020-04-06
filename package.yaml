@@ -26,6 +26,9 @@ dependencies:
 - directory
 - filepath
 - process
+  # I only have this for ghcide, which is unfortunate, but I don't care too
+  # much about on extra dependency here. :shrug:
+- HUnit
 
 library:
   source-dirs: src

@@ -1,6 +1,5 @@
 {
     "base": "/home/may/Documents/notes/scrbl/",
     "editor": "nvim",
-    "extension": ".txt",
-    "accept_paths": true
+    "extension": ".txt"
 }

@@ -37,14 +37,23 @@ cfgFailTestCase path expectedMsg = TestCase
 -- tests.
 configTests = TestList
   [ TestLabel
-    "noNested"
+    "noEditor"
     (cfgTestCase
-      "./rsrc/testdata/config/no_sync.json"
+      "./rsrc/testdata/config/no_editor.json"
       Config { base      = Just "./scrap/simple/"
-             , editor    = Just "vim"
+             , editor    = Nothing
              , extension = Just ".txt"
-             , sync      = Nothing
              }
+    )
+  , TestLabel
+    "noExtension"
+    (cfgTestCase
+      "./rsrc/testdata/config/no_extension.json"
+      Config
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Nothing
+        }
     )
   , TestLabel
     "allFields"
@@ -54,67 +63,7 @@ configTests = TestList
         { base      = Just "./scrap/simple/"
         , editor    = Just "vim"
         , extension = Just ".txt"
-        , sync      = Just Sync
-                        { ssh = Just SSH { host    = "blah"
-                                         , port    = 90
-                                         , sshpath = "scrap/simple/"
-                                         }
-                        , local = Just Local { localpath = "./scrap/simple_backup/" }
-                        }
         }
-    )
-  , TestLabel
-    "partialSyncLocal"
-    (cfgTestCase
-      "./rsrc/testdata/config/partial_sync_local.json"
-      Config
-        { base      = Just "./scrap/simple/"
-        , editor    = Just "vim"
-        , extension = Just ".txt"
-        , sync      = Just Sync
-                        { ssh = Nothing
-                        , local = Just Local { localpath = "./scrap/simple_backup/" }
-                        }
-        }
-    )
-  , TestLabel
-    "partialSyncSSH"
-    (cfgTestCase
-      "./rsrc/testdata/config/partial_sync_ssh.json"
-      Config
-        { base      = Just "./scrap/simple/"
-        , editor    = Just "vim"
-        , extension = Just ".txt"
-        , sync      = Just Sync
-                        { ssh   = Just SSH { host    = "blah"
-                                           , port    = 90
-                                           , sshpath = "scrap/simple/"
-                                           }
-                        , local = Nothing
-                        }
-        }
-    )
-  , TestLabel
-    "portDefaults"
-    (cfgTestCase
-      "./rsrc/testdata/config/sync_ssh_missing_port.json"
-      Config
-        { base      = Just "./scrap/simple/"
-        , editor    = Just "vim"
-        , extension = Just ".txt"
-        , sync      = Just Sync
-                        { ssh   = Just SSH { host    = "blah"
-                                           , port    = 22
-                                           , sshpath = "scrap/simple/"
-                                           }
-                        , local = Nothing
-                        }
-        }
-    )
-  , TestLabel
-    "missingHostnameErrors"
-    (cfgFailTestCase "./rsrc/testdata/config/sync_ssh_missing_hostname.json"
-                     "Error in $.sync.ssh: key \"host\" not present"
     )
   , TestLabel
     "missingConfigFile"
@@ -131,11 +80,10 @@ configTests = TestList
   , TestLabel
     "extraField"
     (cfgTestCase
-      "./rsrc/testdata/config/no_sync.json"
+      "./rsrc/testdata/config/extra_field.json"
       Config { base      = Just "./scrap/simple/"
              , editor    = Just "vim"
              , extension = Just ".txt"
-             , sync      = Nothing
              }
     )
   ]

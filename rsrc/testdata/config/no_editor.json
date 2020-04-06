@@ -1,5 +1,4 @@
 {
     "base": "./scrap/simple/",
-    "editor": "vim",
     "extension": ".txt"
 }

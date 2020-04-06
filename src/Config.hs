@@ -5,7 +5,6 @@
 module Config
   ( Config(..)
   , baseString
-  , Sync(..)
   , SSH(..)
   , Local(..)
   , getConfigAt
@@ -40,18 +39,10 @@ newtype Local =
 instance FromJSON Local where
   parseJSON (Object v) = Local <$> v .: "path"
 
-data Sync =
-    Sync { ssh :: Maybe SSH
-         , local :: Maybe Local
-         } deriving (Show,Generic,Eq)
-
-instance FromJSON Sync
-
 data Config =
     Config { base :: Maybe String -- TODO(may): We should probably allow this field to be interpolated and accept `~`.
            , editor :: Maybe String -- TODO(may): We should default to $EDITOR.
            , extension :: Maybe String
-           , sync :: Maybe Sync
            } deriving (Show,Generic,Eq)
 
 baseString :: Config -> String
@@ -66,8 +57,6 @@ instance FromJSON Config where
       .:? "editor"
       <*> v
       .:? "extension"
-      <*> v
-      .:? "sync"
 
 getConfigAt :: FilePath -> IO (Either String Config)
 getConfigAt path = do
