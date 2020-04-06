@@ -7,13 +7,18 @@ where
 
 import           Test.HUnit
 import           System.Directory
+import           System.Environment
 
 import           Config
+
+fakeHome = "/tmp/boo"
 
 cfgTestCase :: FilePath -> Config -> Test
 cfgTestCase path expectedCfg = TestCase
   (do
-    eitherCfg <- getConfigAt path
+    setEnv "EDITOR" "vim"
+    setEnv "HOME" fakeHome
+    eitherCfg <- getConfig (Just path)
     case eitherCfg of
       Left err ->
         assertFailure
@@ -37,15 +42,6 @@ cfgFailTestCase path expectedMsg = TestCase
 -- tests.
 configTests = TestList
   [ TestLabel
-    "noEditor"
-    (cfgTestCase
-      "./rsrc/testdata/config/no_editor.json"
-      Config { base      = Just "./scrap/simple/"
-             , editor    = Nothing
-             , extension = Just ".txt"
-             }
-    )
-  , TestLabel
     "noExtension"
     (cfgTestCase
       "./rsrc/testdata/config/no_extension.json"
@@ -61,6 +57,26 @@ configTests = TestList
       "./rsrc/testdata/config/all.json"
       Config
         { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        }
+    )
+  , TestLabel
+    "omittedEditor"
+    (cfgTestCase
+      "./rsrc/testdata/config/no_editor.json"
+      Config
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        }
+    )
+  , TestLabel
+    "tildeExpansion"
+    (cfgTestCase
+      "./rsrc/testdata/config/tilde_expansion.json"
+      Config
+        { base      = Just (fakeHome ++ "/scrap/simple/")
         , editor    = Just "vim"
         , extension = Just ".txt"
         }
