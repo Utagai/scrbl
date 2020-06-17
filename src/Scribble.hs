@@ -25,4 +25,6 @@ materialize :: Scribble -> String -> IO ()
 materialize scrbl base = do
   let (dirpath, filename) = splitFileName (filepath scrbl)
   createDirectoryIfMissing True (base </> dirpath)
-  writeFile (base </> filepath scrbl) ""
+  let scrblPath = base </> filepath scrbl
+  pathExists <- doesFileExist scrblPath
+  if pathExists then return () else writeFile scrblPath ""
