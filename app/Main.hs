@@ -25,8 +25,6 @@ main = do
   -- handleArgs will handle the work of exiting on bad args or on help.
   args <- handleArgs
   cfg  <- config args
-  print cfg
-  print args
   let scrbl = toScribble . segments $ args
   materialize scrbl (baseString cfg)
   let scrblFilePath = baseString cfg </> filepath scrbl
