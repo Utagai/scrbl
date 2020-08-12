@@ -22,9 +22,8 @@ getConfigPathTestCase :: [String] -> Maybe String -> Test
 getConfigPathTestCase args expectedPath =
   TestCase (getConfigPath args @?= expectedPath)
 
-argTestCase :: [String] -> Test
-argTestCase args =
-  TestCase (assertEqual "args are equal" args ["hello", "world"])
+toArgsTestCase :: [String] -> Args -> Test
+toArgsTestCase args expectedArg = TestCase (toArgs args @?= expectedArg)
 
 helpArgTests = TestList
   [ TestLabel "lone --help is detected correctly"
@@ -34,6 +33,9 @@ helpArgTests = TestList
               (isHelpArgsTestCase ["bar", "baz", "foo", "--help"] True)
   , TestLabel "--help as first argument is still considered help args"
               (isHelpArgsTestCase ["--help", "bar", "baz", "foo"] True)
+  , TestLabel
+    "--help as a middle argument is still considered help args"
+    (isHelpArgsTestCase ["other", "stuff", "--help", "bar", "baz", "foo"] True)
   , TestLabel "empty argument list is not a help argument"
               (isHelpArgsTestCase [] False)
   , TestLabel "single non-help argument is not considered a help argument"
@@ -60,6 +62,33 @@ getConfigPathTests = TestList
     "config flag with a non-filepath is still picked up because args is for parsing not validation"
     (getConfigPathTestCase ["-c", "NOT A FILEPATH", "barf"]
                            (Just "NOT A FILEPATH")
+    )
+  , TestLabel "empty argument list leads to nothing"
+              (getConfigPathTestCase [] Nothing)
+  ]
+
+toArgsTests = TestList
+  [ TestLabel "empty argument list leads to an empty args"
+              (toArgsTestCase [] Args {configPath = Nothing, segments = []})
+  , TestLabel
+    "specifies config path but no segments"
+    (toArgsTestCase ["--config", "/foo/bar/baz"]
+                    Args {configPath = Just "/foo/bar/baz", segments = []}
+    )
+  , TestLabel
+    "specifies segments but no config path"
+    (toArgsTestCase
+      ["notes", "about", "stuff"]
+      Args {configPath = Nothing, segments = ["notes", "about", "stuff"]}
+    )
+  , TestLabel
+    "specifies config and segments"
+    (toArgsTestCase
+      ["--config", "/foo/bar/baz", "notes", "about", "stuff"]
+      Args
+        { configPath = Just "/foo/bar/baz"
+        , segments   = ["notes", "about", "stuff"]
+        }
     )
   ]
 

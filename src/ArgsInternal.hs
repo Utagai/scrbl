@@ -16,7 +16,7 @@ import           Data.List
 data Args =
     Args { configPath :: Maybe String
          , segments :: [String]
-         } deriving (Show)
+         } deriving (Show, Eq)
 
 isHelpArg :: String -> Bool
 isHelpArg arg = arg == "--help" || arg == "-h"
@@ -71,7 +71,7 @@ getConfigPath :: [String] -> Maybe String
 getConfigPath args = if configSpecified then config else Nothing
  where
   configSpecified =
-    (head args == "--config" || head args == "-c") && length args > 1
+    length args > 1 && (head args == "--config" || head args == "-c")
   config = Just (args !! 1) -- Config comes right after if it exists.
 
 toArgs :: [String] -> Args
