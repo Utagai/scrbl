@@ -6,6 +6,18 @@
 opened in the user's `$EDITOR`, or configured binary. `scrbl` exposes a
 natural, frictionless interface for handling and organizing notes.
 
+At some point I may add some syncing feature to something remote, e.g., Google
+drive or a server via `scp`. Thus far, my notes tend to be so ephemeral that
+this has not really been a priority of mine.
+
+## Note on the code
+I did this project largely for the sake of getting some practical Haskell
+experience, i.e., writing some "real-world" Haskell code. As a result, there
+are some design choices here that are probably not good at all, such as
+hand-coding command line argument parsing instead of using a dependency like
+`parseargs`, or writing an excessive amount of test code to familiarize myself
+with `HUnit`.
+
 ## Usage
 ```bash
 $ scrbl --help
