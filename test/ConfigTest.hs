@@ -17,7 +17,7 @@ cfgTestCase :: FilePath -> Config -> Test
 cfgTestCase path expectedCfg = TestCase
   (do
     setEnv "EDITOR" "vim"
-    setEnv "HOME" fakeHome
+    setEnv "HOME"   fakeHome
     eitherCfg <- getConfig (Just path)
     case eitherCfg of
       Left err ->
@@ -97,9 +97,10 @@ configTests = TestList
     "extraField"
     (cfgTestCase
       "./rsrc/testdata/config/extra_field.json"
-      Config { base      = Just "./scrap/simple/"
-             , editor    = Just "vim"
-             , extension = Just ".txt"
-             }
+      Config
+        { base      = Just "./scrap/simple/"
+        , editor    = Just "vim"
+        , extension = Just ".txt"
+        }
     )
   ]
