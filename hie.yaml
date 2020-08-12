@@ -1,6 +1,11 @@
 cradle:
   stack:
-    component: "scrbl"
+    - path: "./src"
+      component: "scrbl:lib"
+    - path: "./app/Main.hs"
+      component: "scrbl"
+    - path: "./test"
+      component: "scrbl:test:scrbl-test"
 
 dependencies:
   - package.yaml
